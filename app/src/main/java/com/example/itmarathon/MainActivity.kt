@@ -10,10 +10,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.itmarathon.features.presentation.screens.CourseScreen
 import com.example.itmarathon.features.presentation.screens.MenuScreen
+import com.example.itmarathon.features.presentation.screens.ProfileScreen
 import com.example.itmarathon.features.presentation.screens.SignInScreen
 import com.example.itmarathon.features.presentation.screens.SignUpScreen
 import com.example.itmarathon.features.presentation.viewmodels.AuthStateViewModel
@@ -65,6 +69,21 @@ class MainActivity : ComponentActivity() {
 
                     composable("MenuScreen"){
                         MenuScreen(user.value, navController)
+                    }
+
+                    composable("ProfileScreen"){
+                        ProfileScreen(email = user.value.email, navController = navController)
+                    }
+
+                    composable("CourseScreen?name={name}&teacher={teacher}",
+                        arguments = listOf(
+                            navArgument(name = "name"){
+                                type = NavType.StringType
+                                nullable = true
+                            },
+                        )){ backstackEntry ->
+                            CourseScreen(name = backstackEntry.arguments?.getString("name")!!,navController)
+
                     }
                 }
             }

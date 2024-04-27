@@ -33,7 +33,11 @@ import androidx.navigation.NavController
 import com.example.itmarathon.R
 import com.example.itmarathon.features.domain.models.Course
 import com.example.itmarathon.features.domain.models.Student
+import com.example.itmarathon.features.presentation.components.MarathonAppButton
+import com.example.itmarathon.features.presentation.viewmodels.AuthViewModel
 import com.example.itmarathon.features.presentation.viewmodels.CoursesViewModel
+import com.example.itmarathon.ui.theme.darkGray
+import com.example.itmarathon.ui.theme.evenLighterGray
 import com.example.itmarathon.ui.theme.lightGray
 
 @Composable
@@ -46,7 +50,7 @@ fun MenuScreen(
     Log.d("courses", coursesViewModel.courses.toString())
     Column {
         HeaderMainMenu(name = user.name)
-        MainScreen(list = coursesViewModel.courses)
+        MainScreen(list = coursesViewModel.courses,navController = navController)
     }
 }
 
@@ -92,7 +96,7 @@ fun HeaderMainMenu(
     }
 }
 @Composable
-fun MainScreen(list: List<Course>){
+fun MainScreen(list: List<Course>,navController: NavController,authViewModel: AuthViewModel = hiltViewModel()){
     Card(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(rememberScrollState()),
@@ -103,20 +107,44 @@ fun MainScreen(list: List<Course>){
         ) {
             LazyRow {
                 items(list.size){
-                    Course(course = list[it])
+                    Course(course = list[it], navController = navController)
                 }
+            }
+
+            Row(modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 20.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                MarathonAppButton(text = "Profile Data",
+                    onButClick = {
+                        navController.navigate("ProfileScreen")
+                    },
+                    color = darkGray,
+                    textColor = evenLighterGray)
+
+                MarathonAppButton(text = "Log Out",
+                    onButClick = {
+                        authViewModel.logOut()
+                    },
+                    color = darkGray,
+                    textColor = evenLighterGray)
             }
         }
     }
 }
 @Composable
-fun Course(course: Course){
+fun Course(
+    course: Course,
+    navController: NavController
+) {
+
     Card(modifier = Modifier
         .width(190.dp)
         .height(150.dp)
         .padding(start = 20.dp, end = 20.dp)
         .clickable {
-                   
+            navController.navigate("CourseScreen?name=${course.name}")
         },
         colors = CardDefaults.cardColors(
             lightGray

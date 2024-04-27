@@ -27,4 +27,15 @@ class CourseRepositoryIMPL @Inject constructor(
         Log.d("courses",courses.toString())
         return courses
     }
+
+    override suspend fun getCourseByName(name: String): Course {
+        val course = Course()
+        val db = fb.collection("optionals").document(name).get().await().data
+        course.name = (db?.get("Name") as? String)!!
+        course.teacher = (db["Teacher"] as? String)!!
+        course.accepted = (db["accepted"] as? List<Student>)!!
+        course.requests = (db["requests"] as? List<Student>)!!
+
+        return course
+    }
 }

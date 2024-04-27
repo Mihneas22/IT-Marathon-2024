@@ -13,8 +13,15 @@ class CoursesViewModel @Inject constructor(
     private val repo: CourseRepository
 ): ViewModel(){
     var courses = mutableListOf<Course>()
+
+    var course = Course()
     fun getCourses()
     =viewModelScope.launch {
         courses = repo.getCourses().toMutableList()
+    }
+
+    fun getCourseByName(name: String)
+    =viewModelScope.launch {
+        course = repo.getCourseByName(name)
     }
 }
