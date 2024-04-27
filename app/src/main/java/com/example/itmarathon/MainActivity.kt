@@ -22,6 +22,7 @@ import com.example.itmarathon.features.presentation.screens.SignInScreen
 import com.example.itmarathon.features.presentation.screens.SignUpScreen
 import com.example.itmarathon.features.presentation.viewmodels.AuthStateViewModel
 import com.example.itmarathon.features.presentation.viewmodels.AuthViewModel
+import com.example.itmarathon.features.presentation.viewmodels.CoursesViewModel
 import com.example.itmarathon.ui.theme.ITMarathonTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -82,7 +83,7 @@ class MainActivity : ComponentActivity() {
                                 nullable = true
                             },
                         )){ backstackEntry ->
-                            CourseScreen(name = backstackEntry.arguments?.getString("name")!!,navController)
+                            CourseScreen(student = user.value,name = backstackEntry.arguments?.getString("name")!!,navController)
 
                     }
                 }

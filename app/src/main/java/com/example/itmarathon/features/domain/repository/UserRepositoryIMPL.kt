@@ -31,18 +31,21 @@ class UserRepositoryIMPL @Inject constructor(
     }catch (ex: Exception){
         Resource.Failure(ex)
     }
+
+    override suspend fun ApplyToCourse(
+        nameCourse: String,
+        student: Student
+    ): Resource<Boolean>
+    =try{
+        fb.collection("optionals").document(nameCourse).collection("Requests").document(student.email).set(student)
+        Resource.Success(true)
+    }catch (ex: Exception){
+        Resource.Failure(ex)
+    }
     override suspend fun checkIfApplied(): Resource<Boolean>
     =try{
         Resource.Success(true)
     }catch (ex: Exception){
         Resource.Failure(ex)
-    }
-
-    override suspend fun getAcceptedCourses(): List<Course> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getAppliedCourses(): List<Course> {
-        TODO("Not yet implemented")
     }
 }

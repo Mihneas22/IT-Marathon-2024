@@ -1,5 +1,8 @@
 package com.example.itmarathon.features.presentation.viewmodels
 
+import android.util.Log
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itmarathon.features.data.repository.CourseRepository
@@ -12,12 +15,15 @@ import javax.inject.Inject
 class CoursesViewModel @Inject constructor(
     private val repo: CourseRepository
 ): ViewModel(){
-    var courses = mutableListOf<Course>()
+    private val _courses = mutableStateOf(listOf<Course>())
+    val courses: State<List<Course>> = _courses
 
     var course = Course()
+
     fun getCourses()
     =viewModelScope.launch {
-        courses = repo.getCourses().toMutableList()
+        _courses.value = repo.getCourses()
+        Log.d("coursesViewModel",courses.value.toString())
     }
 
     fun getCourseByName(name: String)

@@ -21,6 +21,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,10 +48,11 @@ fun MenuScreen(
     coursesViewModel: CoursesViewModel = hiltViewModel()
 ){
     coursesViewModel.getCourses()
-    Log.d("courses", coursesViewModel.courses.toString())
+    val result = coursesViewModel.courses.value
+    Log.d("fb", result.toString())
     Column {
         HeaderMainMenu(name = user.name)
-        MainScreen(list = coursesViewModel.courses,navController = navController)
+        MainScreen(list = coursesViewModel.courses.value,navController = navController)
     }
 }
 
@@ -105,6 +107,7 @@ fun MainScreen(list: List<Course>,navController: NavController,authViewModel: Au
             .fillMaxSize()
             .padding(30.dp)
         ) {
+            Log.d("listMainScreen",list.size.toString())
             LazyRow {
                 items(list.size){
                     Course(course = list[it], navController = navController)
