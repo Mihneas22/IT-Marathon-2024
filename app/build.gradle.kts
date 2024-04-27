@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.gms.google-services")
+    id("com.google.dagger.hilt.android")
+    id("io.realm.kotlin")
+    kotlin("kapt")
 }
 
 android {
@@ -66,4 +70,28 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("androidx.compose.material:material-icons-extended:1.6.4")
+
+    //Google
+    implementation("androidx.compose.ui:ui-text-google-fonts:1.6.3")
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.27.0")
+
+    // Compose dependencies
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
+    implementation ("androidx.navigation:navigation-compose:2.7.7")
+    implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.6")
+
+    // Coroutines
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0")
+
+
+    //Dagger and Hilt
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-android-compiler:2.51")
+
+    //Realm
+    implementation("io.realm.kotlin:library-base:1.11.0")
 }

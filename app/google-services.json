@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "178517555644",
+    "project_id": "itmarathon2024",
+    "storage_bucket": "itmarathon2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178517555644:android:379d9ed2b130ada43393b9",
+        "android_client_info": {
+          "package_name": "com.example.itmarathon"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ZSaO72ot5i6NYqLj2_UJBsnTly6R_mQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
