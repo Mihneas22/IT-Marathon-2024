@@ -12,13 +12,14 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
 @Composable
-fun FitnessAppTextField(
+fun MarathonAppTextField(
     modifier: Modifier = Modifier,
     text:String,
     onTextChange: (String) -> Unit,
@@ -62,11 +63,13 @@ fun FitnessAppTextField(
             disabledTextColor = textColor,
             errorTextColor = Color.Red
         ),
+
+        shape = RectangleShape
     )
 }
 
 @Composable
-fun FitnessAppButton(
+fun MarathonAppButton(
     modifier: Modifier = Modifier,
     text: String,
     onButClick: () -> Unit,
@@ -79,7 +82,8 @@ fun FitnessAppButton(
         enabled=enabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = color
-        )) {
+        ),
+        shape = RectangleShape) {
         Text(text = text,
             color = textColor,
             style = MaterialTheme.typography.bodyLarge
@@ -88,7 +92,7 @@ fun FitnessAppButton(
 }
 
 @Composable
-fun FitnessAppPasswordTextField(
+fun MarathonAppPasswordTextField(
     modifier: Modifier = Modifier,
     text:String,
     onTextChange: (String) -> Unit,
@@ -138,6 +142,7 @@ fun FitnessAppPasswordTextField(
 
         trailingIcon = {
             icon()
-        }
+        },
+        shape = RectangleShape
     )
 }
