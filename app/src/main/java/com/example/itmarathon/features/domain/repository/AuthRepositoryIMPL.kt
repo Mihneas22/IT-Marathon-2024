@@ -1,10 +1,12 @@
 package com.example.itmarathon.features.domain.repository
 
 import com.example.itmarathon.features.data.repository.AuthRepository
+import com.example.itmarathon.features.domain.models.Student
 import com.example.itmarathon.features.domain.util.Resource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.auth.User
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.SharingStarted
@@ -58,6 +60,18 @@ class AuthRepositoryIMPL @Inject constructor(
         Resource.Success(true)
     }catch (ex: Exception){
         Resource.Failure(ex)
+    }
+
+    override suspend fun getUserFB(email: String): Student {
+        val db = fb.collection("users").document(email).get().await().data
+        return Student(
+            (db?.get("user_name") as? String)!!,
+            (db["user_email"] as? String)!!,
+            (db["user_password"] as? String)!!,
+            (db["user_year"] as? String)!!,
+            (db["user_credits"] as? String)!!,
+            (db["user_lastYearScore"] as? String)!!,
+        )
     }
 
     override suspend fun observeAuthState(observer: (FirebaseUser?) -> Unit) {

@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.itmarathon.features.data.repository.AuthRepository
+import com.example.itmarathon.features.domain.models.Student
 import com.example.itmarathon.features.domain.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class AuthViewModel @Inject constructor(
     var createUserResponse by mutableStateOf<Resource<Boolean>>(Resource.Success(false))
         private set
 
+    var user = mutableStateOf(Student())
     fun signUpWithEmailAndPassword(email: String,password: String)
     =viewModelScope.launch {
         signUpResponse = Resource.Loading
@@ -40,6 +42,11 @@ class AuthViewModel @Inject constructor(
     =viewModelScope.launch {
         createUserResponse = Resource.Loading
         createUserResponse = repo.createUserFB(name, email, password, year)
+    }
+
+    fun getUserData(email: String)
+    =viewModelScope.launch {
+        user.value = repo.getUserFB(email)
     }
 
     fun logOut()

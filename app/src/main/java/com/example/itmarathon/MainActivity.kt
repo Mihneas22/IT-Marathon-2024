@@ -1,6 +1,7 @@
 package com.example.itmarathon
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -29,6 +30,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val authStateViewModel by viewModels<AuthStateViewModel>()
+    private val authViewModel by viewModels<AuthViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -41,7 +43,10 @@ class MainActivity : ComponentActivity() {
                 }
                 val currentUserSign = authStateViewModel.getAuthStateLogin().collectAsState().value
                 val currentUserData = authStateViewModel.getAuthStateData().collectAsState().value
-
+                val email = currentUserData?.email
+                if (email != null) {
+                    Log.d("userData",email)
+                }
                 if(currentUserSign)
                 {
                     navigator.value="SignInScreen"
@@ -49,6 +54,11 @@ class MainActivity : ComponentActivity() {
                 else{
                     navigator.value="MenuScreen"
                 }
+                if (email != null) {
+                    authViewModel.getUserData(email)
+                }
+                val user = authViewModel.user
+                Log.d("userData",user.value.email)
 
                 NavHost(navController = navController, startDestination = navigator.value){
                     composable("SignUpScreen"){
@@ -60,7 +70,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("MenuScreen"){
-                        MenuScreen(navController)
+                        MenuScreen(user.value,navController)
                     }
                 }
             }

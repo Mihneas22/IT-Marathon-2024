@@ -1,5 +1,6 @@
 package com.example.itmarathon.features.data.repository
 
+import com.example.itmarathon.features.domain.models.Student
 import com.example.itmarathon.features.domain.util.Resource
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.CoroutineScope
@@ -11,6 +12,8 @@ interface AuthRepository {
     suspend fun signInWithEmailAndPassword(email: String,password: String): Resource<Boolean>
 
     suspend fun createUserFB(name: String,email: String,password: String,year: String): Resource<Boolean>
+
+    suspend fun getUserFB(email: String): Student
 
     suspend fun observeAuthState(observer: (FirebaseUser?) -> Unit)
 
